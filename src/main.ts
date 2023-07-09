@@ -100,14 +100,14 @@ gltfLoader.load(
  */
 
 const count = 300
-const size = 0.05
+const size = 1.5
 const geometry = new THREE.BufferGeometry()
 const positions = new Float32Array(count * 3)
 
 for(let i = 0; i < count; i++)
 {
 	const i3 = i * 3
-	positions[i3    ] = (Math.random() - 0.5) * 5
+	positions[i3    ] = (Math.random() - 0.5) * 6
 	positions[i3 + 1] = (Math.random() - 0.5) * 4
 	positions[i3 + 2] = (Math.random() - 0.5) * 4
 }
@@ -181,6 +181,7 @@ const renderer = new THREE.WebGLRenderer({
     canvas: canvas? canvas: undefined,
 	alpha: true
 })
+renderer.setClearColor(new THREE.Color( 0x101010 ));
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
