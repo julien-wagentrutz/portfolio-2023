@@ -4,6 +4,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { gsap } from 'gsap'
 import { TextPlugin } from 'gsap/TextPlugin'
 import * as dat from 'lil-gui'
+import { log } from 'three/examples/jsm/nodes/Nodes.js'
 /**
  * GUI
  */
@@ -99,7 +100,7 @@ gltfLoader.load(
  *  STARS
  */
 
-const count = 300
+const count = 600
 const size = 1.5
 const geometry = new THREE.BufferGeometry()
 const positions = new Float32Array(count * 3)
@@ -107,7 +108,7 @@ const positions = new Float32Array(count * 3)
 for(let i = 0; i < count; i++)
 {
 	const i3 = i * 3
-	positions[i3    ] = (Math.random() - 0.5) * 6
+	positions[i3    ] = (Math.random() - 0.5) * 8
 	positions[i3 + 1] = (Math.random() - 0.5) * 4
 	positions[i3 + 2] = (Math.random() - 0.5) * 4
 }
@@ -166,6 +167,16 @@ const sizes = {
 	 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  })
 
+ const cursor = {
+	x: 0,
+	y: 0 
+}
+
+window.addEventListener('mousemove', (_event) => {
+	cursor.x = (_event.clientX / sizes.width) - 0.5
+	cursor.y = (_event.clientY / sizes.height) - 0.5
+})
+
 /**
  * Camera
  */
@@ -200,8 +211,11 @@ const tick = () =>
 		moon.rotation.x = elapsedTime * 0.05
 		moon.rotation.y = elapsedTime * 0.04
 	}
-	camera.updateProjectionMatrix()
 
+	
+	camera.updateProjectionMatrix()
+	points.position.x = cursor.x * 0.2
+	points.position.y = -cursor.y * 0.2
     // Render
     renderer.render(scene, camera)
 
